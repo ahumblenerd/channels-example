@@ -74,7 +74,7 @@ def new_room(request):
             new_room = Room.objects.create(label=label)
     return redirect(chat_room, label=label)
 
-
+@login_required
 def chat_room(request, label):
     """
     Room view - show the room, with latest messages.
