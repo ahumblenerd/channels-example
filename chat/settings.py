@@ -122,7 +122,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "asgi_redis.RedisChannelLayer",
         "CONFIG": {
-                "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+                "hosts": [os.environ.get('REDIS_URL', 'redis://h:pak73301cqar74bluo8v6taqisj@ec2-54-243-217-112.compute-1.amazonaws.com:18529')],
         },
         "ROUTING": "chat.routing.channel_routing",
     },
