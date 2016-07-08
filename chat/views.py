@@ -54,6 +54,7 @@ from project.models import Project
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
+import string
 @login_required()
 def test(request):
     return HttpResponse("Hello World")
@@ -68,7 +69,7 @@ def new_room(request):
     new_room = None
     while not new_room:
         with transaction.atomic():
-            label = haikunator.haikunate()
+            label =  "".join( [random.choice(string.letters) for i in xrange(15)] )
             if Room.objects.filter(label=label).exists():
                 continue
             new_room = Room.objects.create(label=label)

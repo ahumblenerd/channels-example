@@ -26,7 +26,9 @@ class Project(models.Model):
         new_room = None
         while not new_room:
             with transaction.atomic():
-                label = haikunator.haikunate()
+                import random
+                import  string
+                label = "".join( [random.choice(string.letters) for i in xrange(15)] )
                 if Room.objects.filter(label=label).exists():
                     continue
                 new_room = Room.objects.create(label=label)
