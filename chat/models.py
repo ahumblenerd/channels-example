@@ -10,6 +10,9 @@ class Room(models.Model):
     def __unicode__(self):
         return self.label
 
+    def __str__(self):
+        return self.label
+
 class Message(models.Model):
     room = models.ForeignKey(Room, related_name='messages')
     handle = models.TextField()

@@ -8,7 +8,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "".join(random.choice(string.printable) for i in range(40)))
 DEBUG = os.environ.get("DEBUG", False)
-
+DEBUG = True
 # Application definition
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -19,6 +19,13 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'channels',
     'chat',
+    'project',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -30,6 +37,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+
 )
 
 ROOT_URLCONF = 'chat.urls'
@@ -41,10 +49,14 @@ TEMPLATES = (
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
+
+
             ],
             'debug': DEBUG,
         },
@@ -55,8 +67,15 @@ TEMPLATES = (
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default="postgres:///channels-example", conn_max_age=500)
+    'default': dj_database_url.config(default="postgres:///chat")
 }
+
+AUTHENTICATION_BACKENDS = (
+
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
 
 AUTH_PASSWORD_VALIDATORS = (
     {
@@ -103,7 +122,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "asgi_redis.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+                "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
         },
         "ROUTING": "chat.routing.channel_routing",
     },
@@ -131,3 +150,8 @@ LOGGING = {
         },
     },
 }
+
+
+
+
+SITE_ID = 1

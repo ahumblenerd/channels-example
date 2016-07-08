@@ -37,7 +37,7 @@ def ws_connect(message):
 
 @channel_session
 def ws_receive(message):
-    # Look up the room from the channel session, bailing if it doesn't exist
+    print("inside recieve")
     try:
         label = message.channel_session['room']
         room = Room.objects.get(label=label)
@@ -48,8 +48,6 @@ def ws_receive(message):
         log.debug('recieved message, buy room does not exist label=%s', label)
         return
 
-    # Parse out a chat message from the content text, bailing if it doesn't
-    # conform to the expected message format.
     try:
         data = json.loads(message['text'])
     except ValueError:
